@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+    <title>User Dashboard</title>
+</head>
+<body>
+    <h2>User Dashboard</h2>
+    <p>Welcome, {{ user.username }}! You can manage your files here.</p>
+    <a href="{% url 'logout' %}">Logout</a>
+</body>
+</html>
+{%endblock%}
