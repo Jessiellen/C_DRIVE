@@ -18,13 +18,14 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from C_Drive.views import IndexView, Login, SignupView, Logout  
+from .views import home_view, index_view, login_view, signup_view, logout_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('files/', include('files.urls')),
-    path('', IndexView.as_view(), name='home'),
-    path('login/', Login.as_view(), name='login'),
-    path('signup/', SignupView.as_view(), name='signup'),
-    path('logout/', Logout.as_view(), name='logout'),
+    path('', index_view, name='indexView'),
+    path('home/', home_view, name='home'),   
+    path('login/', login_view, name='login'),
+    path('signup/', signup_view, name='signup'),
+    path('logout/', logout_view, name='logout'),
+    path('files/', include('files.urls')),  
 ]

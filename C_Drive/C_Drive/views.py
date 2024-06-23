@@ -1,38 +1,44 @@
-from django.shortcuts import redirect
-from django.urls import reverse_lazy
-from django.views.generic import TemplateView, FormView
-from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import redirect, render
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import authenticate, login, logout
 
 
 
-class IndexView(TemplateView):
-    template_name = 'index.html'
+def index_view(request):
+    return render(request, 'index.html')
 
+def home_view(request):
+    return render(request, 'index.html')
 
-class SignupView(FormView):
-    template_name="auth/signup.html"
-    form_class=UserCreationForm
-    success_url=reverse_lazy('login')
-    redirect_authenticated_user = True
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, request.POST)
+        if form.is_valid():
+            username = request.POST["username"]
+            password = request.POST["password"]
+            user = authenticate(request,username=username, password=password)
+            if user is not None:
+                login(request, user)
+                if user.is_staff:
+                    return redirect('admin:index')
+                else:
+                    return redirect('index_view')  
+    return render(request, 'auth/login.html', {'form':AuthenticationForm()})  
 
-    def form_valid(self,form):
-        user=form.save()
-        if user is not None:
-            login(self.request,user)
-        return super(SignupView,self).form_valid(form)
+def signup_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            if user.is_staff:
+                return redirect('admin:index')
+            else:
+                return redirect('home') 
+    else:
+        form = UserCreationForm()
+    return render(request, 'auth/signup.html', {'form': form})
 
-    def get(self, request, *args, **kwargs):
-        if self.request.user.is_authenticated:
-            return redirect('files')
-        return super(SignupView,self).get(request, *args, **kwargs)
-
-
-class Login(LoginView):
-    template_name="auth/login.html"
-    fields= "__all__"
-    redirect_authenticated_user = True
-    success_url = "files"
-
-class Logout(LogoutView):
-  success_url = reverse_lazy('index')
+def logout_view(request):
+    logout(request)
+    return redirect('indexView')

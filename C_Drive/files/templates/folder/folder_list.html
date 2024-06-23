@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Folder List{% endblock %}
+
+{% block content %}
+    <h1>Folder List</h1>
+    <ul>
+        {% for folder in folders %}
+            <li>{{ folder.name }} - <a href="{% url 'folder_delete' pk=folder.pk %}">Delete</a></li>
+        {% empty %}
+            <li>No folders found.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'folder_create' %}">Create New Folder</a>
+{% endblock content %}

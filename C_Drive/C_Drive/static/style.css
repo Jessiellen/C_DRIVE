@@ -1,0 +1,52 @@
+@import url("system.css");
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, sans-serif;
+    box-sizing: border-box;
+}
+
+header {
+    background-color: var(--color-primary);
+    color: #fff;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    color: rgb(129, 129, 253);
+}
+
+.nav-links, .nav-actions {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.nav-links li, .nav-actions li {
+    margin-right: 15px;
+}
+
+.nav-links a, .nav-actions a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+footer {
+    flex: 1;
+    max-height: 64px;
+    background-color: var(--color-primary);
+    padding: 10px 10px;
+    cursor: pointer;
+}
