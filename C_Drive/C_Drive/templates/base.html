@@ -1,46 +1,70 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
-	
+<html lang="pt-br">
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>{% block title %}C Drive{% endblock %}</title>
-	<link rel="stylesheet" href="{% static 'css/styles.css' %}">
-	<link rel="stylesheet" href="{% static 'css/sytem.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static%}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% if user.is_authenticated %}
+      <script src="{% static 'script.js' %}"></script>
+      <script src="{% static 'webComponents.js' %}" type="module"></script>
+    {% endif %}
 </head>
-
-<body> 
-
+<body>
     <nav class="navbar">
-        <div class="container">
-            <div class="navbar-brand">
-                <a href="/">Home</a>
-            </div>
-            <ul class="nav-links">
-				<li><a href="{% url 'file_list' %}">Files</a></li>
-				<li><a href="{% url 'folder_list' %}">Folders</a></li>            
-			</ul>
-            <ul class="nav-actions">
-                {% if user.is_authenticated %}
-                    <li><a href="{% url 'logout' %}">Logout</a></li>
-                {% else %}
-                    <li><a href="{% url 'login' %}">Login</a></li>
-                    <li><a href="{% url 'signup' %}">Sign Up</a></li>
-                {% endif %}
-            </ul>
+        <div class="navbar-left">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'media/logo.png' %}" alt="Logo" class="navbar-logo">
+            </a>
+        </div>
+        <div class="navbar-right">
+            {% if user.is_authenticated %}
+                <p>Olá, {{ user.username }}</p>
+                <a href="{% url 'logout' %}" class="button">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="button">Login</a>
+                <a href="{% url 'signup' %}" class="button">Signup</a>
+            {% endif %}
         </div>
     </nav>
-
-    <div class="container mt-3">
+    <main class="main-content">
         {% block content %}
-        {% endblock %} 
-    </div>
-
-    <footer class="footer">
-        <div class="container">
-            <span>Place footer here.</span>
+        {% if not user.is_authenticated %}
+        <div class="auth-forms">
+            <div class="form-container">
+                <h2>Login</h2>
+                <form action="{% url 'login' %}" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+            <div class="form-container">
+                <h2>Signup</h2>
+                <form action="{% url 'signup' %}" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Signup</button>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+        {% endblock %}
+    </main>
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <img src="{% static 'media/logo.png' %}" alt="Logo" class="footer-logo">
+            </div>
+            <div class="footer-center">
+                <ul class="footer-links">
+                    <li><a href="/about">Sobre Nós</a></li>
+                    <li><a href="/contact">Contato</a></li>
+                    <li><a href="/privacy">Privacidade</a></li>
+                    <li><a href="/terms">Termos de Serviço</a></li>
+                </ul>
+            </div>
         </div>
     </footer>
 </body>

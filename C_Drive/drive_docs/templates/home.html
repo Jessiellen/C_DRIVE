@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="file-list">
+        {% for file in files %}
+        <div class="file-item">
+            <img src="{% static 'media/upload_files.png' %}" alt="File Icon">
+            <div class="file-name">{{ file.name }}</div>
+            <a href="{% url 'file_delete' file.id %}">Delete</a>
+            <img src="{% static 'media/delete.png' %}" alt="Delete">
+        </div>
+        {% endfor %}
+
+        <div class="add-button">
+            <a href="{% url 'create_folder' %}">
+                <img src="{% static 'media/new_folder.png' %}" alt="">
+                <div>Add Folder</div>
+            </a>
+        </div>
+
+        <div class="add-button">
+            <a href="{% url 'upload_file' %}">
+                <img src="{% static 'media/upload_files.png' %}" alt="">
+                <div>Upload File</div>
+            </a>
+        </div>
+        <div class="add-button">
+            <a href="{% url 'upload_file' %}">
+                <img src="{% static 'media/delete.png' %}" alt="">
+                <div>Trash</div>
+    </div>
+    
+        </div>
+    </div>
+</div>
+{% endblock %}

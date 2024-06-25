@@ -1,0 +1,23 @@
+<!-- {% extends 'base.html' %}
+
+{% block title %}Delete Folder{% endblock %}
+
+{% block content %}
+    <h1>Delete Folder</h1>
+    <p>Are you sure you want to delete this folder?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+    </form>
+    {% if object.parent %}
+        <a href="{% url 'folder_list' object.parent.id %}">Cancel</a>
+    {% else %}
+        <a href="{% url 'folder_list' %}">Cancel</a>
+    {% endif %}
+{% endblock %} -->
+
+<form action="{% url 'folder_delete' folder.id %}" method="post">
+    {% csrf_token %}
+    <button type="submit"><img src="{% static 'media/delete.png' %}" alt="Delete"></button>
+</form>
+

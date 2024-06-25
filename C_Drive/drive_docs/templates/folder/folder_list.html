@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Pastas</h1>
+<ul>
+    {% for folder in folders %}
+        <li>
+            <a href="{% url 'folder_list' %}">{{ folder.name }}</a>
+            <a href="{% url 'delete_folder' folder.id %}">Delete</a>
+        </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'create_folder' %}">New Folder</a>
+
+<h1>Arquivos</h1>
+<ul>
+    {% for file in files %}
+        <li>
+            {{ file.title }}
+            <a href="{% url 'delete_file' file.id %}">Delete</a>
+            <a href="{% url 'download_file' file.id %}">Download</a>
+        </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'create_file' %}">Create New File</a>
+{% endblock %}

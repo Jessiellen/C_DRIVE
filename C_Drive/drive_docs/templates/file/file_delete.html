@@ -1,0 +1,29 @@
+<!-- {% extends 'base.html' %}
+
+{% block title %}Delete File{% endblock %}
+
+{% block content %}
+<h1>Delete File</h1>
+<p>Are you sure you want to delete "{{ file.title }}"?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirm</button>
+    <a href="{% url 'file_list' %}">Cancel</a>
+</form>
+
+{% endblock content %} -->
+
+{% extends "base.html" %}
+{% block title %}Delete File{% endblock %}
+
+{% block content %}
+<h2>Delete File</h2>
+<p>Are you sure you want to delete the file "{{ object.file.name }}"?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirm</button>
+    <a href="{% url 'directory_list' object.folder.id if object.folder else '' %}">Cancel</a>
+</form>
+{% endblock %}
+

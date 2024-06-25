@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>
+        {% if folder %}
+            {{ folder.name }}
+        {% else %}
+            List
+        {% endif %}
+    </h2>
+
+    {% if folder and folder.parent %}
+        <a href="{% url 'directory_list' folder.parent.id %}">Back to {{ folder.parent.name }}</a>
+    {% elif folder %}
+        <a href="{% url 'directory_list' %}">Back to Directory</a>
+    {% endif %}
+
+    <h3>Folders</h3>
+    <ul>
+        {% for subfolder in subfolders %}
+            <li><a href="{% url 'directory_list' subfolder.id %}">{{ subfolder.name }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <h3>Files</h3>
+    <ul>
+        {% for file in files %}
+            <li><a href="{% url 'file_download' file.id %}">{{ file.name }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ folder_form.as_p }}
+        <button type="submit" name="create_folder">Create Folder</button>
+    </form>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ file_form.as_p }}
+        <button type="submit" name="upload_file">Upload File</button>
+    </form>
+
+{% endblock %}
+
