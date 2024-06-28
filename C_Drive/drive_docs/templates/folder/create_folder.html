@@ -1,25 +1,16 @@
-<!-- {% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block content %}
-<h1>Criar Nova Pasta</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Criar</button>
-</form>
-<a href="{% url 'folder_list' %}">Voltar</a>
-{% endblock %}
- -->
-
-{% extends "base.html" %}
-{% block title %}Create Folder{% endblock %}
-
-{% block content %}
-<h2>Create Folder</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Create</button>
-</form>
+<div class="form-cont">
+    <h2>Create Folder</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if parent_id %}
+        <input type="hidden" name="parent_id" value="{{ parent_id }}">
+        {% endif %}
+        <button type="submit">Create Folder</button>
+    </form>
+</div>
 {% endblock %}
 

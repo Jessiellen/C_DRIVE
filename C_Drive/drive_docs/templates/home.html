@@ -1,19 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
+
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="file-list">
-        {% for file in files %}
-        <div class="file-item">
-            <img src="{% static 'media/upload_files.png' %}" alt="File Icon">
-            <div class="file-name">{{ file.name }}</div>
-            <a href="{% url 'file_delete' file.id %}">Delete</a>
-            <img src="{% static 'media/delete.png' %}" alt="Delete">
-        </div>
-        {% endfor %}
 
+
+    <div class="file-list">
         <div class="add-button">
             <a href="{% url 'create_folder' %}">
                 <img src="{% static 'media/new_folder.png' %}" alt="">
@@ -22,18 +15,47 @@
         </div>
 
         <div class="add-button">
-            <a href="{% url 'upload_file' %}">
+            <a href="{% url 'file_upload' %}">
                 <img src="{% static 'media/upload_files.png' %}" alt="">
                 <div>Upload File</div>
             </a>
         </div>
-        <div class="add-button">
-            <a href="{% url 'upload_file' %}">
-                <img src="{% static 'media/delete.png' %}" alt="">
-                <div>Trash</div>
     </div>
+    <div class="container-fluid">
+        
+        <div class="card-panel">
+            <p class="subheader">Files</p>
+            {% for file in files %}
+            <div class="card-panel file-item">
+                <img src="{% static 'media/Frame.png' %}" alt="File Icon">
+                <div class="file-name">{{ file.name }}</div>
+                <div class="links">
+                    <a href="{% url 'file_download' file.id %}">Download</a>
+                </div>
+                    <div class="links">
+                    <a href="{% url 'file_delete' file.id %}">Delete</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     
+        <div class="card-panel">
+            <p class="subheader">Folders</p>
+            {% for folder in folders %}
+            <div class="card-panel file-item">
+                <img src="{% static 'media/folder.png' %}" alt="Folder Icon">
+                <div class="links">
+                    <a href="{% url 'folder_view' folder_id=folder.id %}">{{ folder.name }}</a>
+                </div>
+                <div class="links">
+                    <a href="{% url 'folder_download' folder_id=folder.id %}">Download</a>
+                </div>                
+                <div class="links">
+                    <a href="{% url 'folder_delete' pk=folder.id %}">Delete</a>
+                </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
-</div>
-{% endblock %}
+    
+    {% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Folder: {{ folder.name }}{% endblock %}
+
+{% block content %}
+
+<div class="upload-section">
+    <h2>Upload File</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        </form>
+        <button type="submit">Upload</button>
+</div>
+
+<div class="container">
+
+    <div class="files-section">
+        <p class="subheader">Files</p>
+        <h2>Files</h2>
+        <ul>
+            {% for file in files %}
+                <li>{{ file.file.name }}</li>
+            {% empty %}
+                <li>No files found.</li>
+            {% endfor %}
+        </ul>>
+</div>    
+    <div class="subfolders-section">
+        <p class="subheader">Subfolders</p>
+            <h1>{{ folder.name }}</h1>
+        <ul>
+            {% for subfolder in subfolders %}
+                <ul>
+                    <a href="{% url 'folder_view' folder_id=subfolder.id %}">{{ subfolder.name }}</a>
+            {% empty %}
+                <li>No subfolders found.</li>
+            {% endfor %}
+        </ul>
+    </div>
+   
+{% endblock %}

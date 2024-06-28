@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% for folder in folders %}
+<div class="form-cont">
+    <span>{{ folder.name }}</span>
+    <form action="{% url 'folder_download' folder_id=folder.id %}" method="get">
+        <button type="submit">Download</button>
+    </form>
+</div>
+{% endfor %}

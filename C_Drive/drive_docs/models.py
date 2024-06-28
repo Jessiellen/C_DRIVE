@@ -24,8 +24,8 @@ class Folder(models.Model):
         ordering = ['id']
 
 class File(models.Model):
-    file = models.FileField(upload_to='files/')
-    folder = models.ForeignKey(Folder, on_delete=models.CASCADE, related_name='files', default=1)
+    file = models.FileField(upload_to='uploads/')
+    folder = models.ForeignKey(Folder, on_delete=models.CASCADE, related_name='files', default=1, null=True, blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  
 
     def __str__(self):

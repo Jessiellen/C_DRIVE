@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Pastas</h1>
+<div class="form-cont">
+<h1>Folders</h1>
 <ul>
     {% for folder in folders %}
         <li>
@@ -12,7 +13,7 @@
 </ul>
 <a href="{% url 'create_folder' %}">New Folder</a>
 
-<h1>Arquivos</h1>
+<h1>Files</h1>
 <ul>
     {% for file in files %}
         <li>
@@ -23,4 +24,5 @@
     {% endfor %}
 </ul>
 <a href="{% url 'create_file' %}">Create New File</a>
+</div>
 {% endblock %}

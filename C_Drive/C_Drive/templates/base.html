@@ -1,11 +1,11 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% load static%}
+    {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/static_drive/drived.css' %}">
     {% if user.is_authenticated %}
       <script src="{% static 'script.js' %}"></script>
       <script src="{% static 'webComponents.js' %}" type="module"></script>
@@ -14,7 +14,7 @@
 <body>
     <nav class="navbar">
         <div class="navbar-left">
-            <a href="{% url 'home' %}">
+            <a href="{% url 'home2' %}">
                 <img src="{% static 'media/logo.png' %}" alt="Logo" class="navbar-logo">
             </a>
         </div>
@@ -23,8 +23,8 @@
                 <p>Olá, {{ user.username }}</p>
                 <a href="{% url 'logout' %}" class="button">Logout</a>
             {% else %}
-                <a href="{% url 'login' %}" class="button">Login</a>
-                <a href="{% url 'signup' %}" class="button">Signup</a>
+            <a href="{% url 'login' %}" class="button">Login</a>
+            <a href="{% url 'signup' %}" class="button">Signup</a>
             {% endif %}
         </div>
     </nav>
@@ -38,7 +38,8 @@
                     {% csrf_token %}
                     {{ form.as_p }}
                     <button type="submit">Login</button>
-                </form>
+                    <a href="{% url 'password_reset' %}">Esqueceu a senha?</a>
+                </form> 
             </div>
             <div class="form-container">
                 <h2>Signup</h2>
@@ -51,6 +52,7 @@
         </div>
         {% endif %}
         {% endblock %}
+        
     </main>
     <footer class="site-footer">
         <div class="footer-container">
@@ -59,10 +61,10 @@
             </div>
             <div class="footer-center">
                 <ul class="footer-links">
-                    <li><a href="/about">Sobre Nós</a></li>
-                    <li><a href="/contact">Contato</a></li>
-                    <li><a href="/privacy">Privacidade</a></li>
-                    <li><a href="/terms">Termos de Serviço</a></li>
+                    <li><a href="{% url 'home2' %}">Sobre Nós</a></li>
+                    <li><a href="{% url 'home2' %}">Contato</a></li>
+                    <li><a href="{% url 'home2' %}">Privacidade</a></li>
+                    <li><a href="{% url 'home2' %}">Termos de Serviço</a></li>
                 </ul>
             </div>
         </div>

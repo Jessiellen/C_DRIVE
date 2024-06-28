@@ -1,8 +1,45 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block title %}Home{% endblock %}
+
 {% block content %}
-    <ul class="nav-links">
-        <li><a href="{% url 'directory_list' %}">Folders</a></li>            
-    </ul>
+    <div id="slogan" style="display: none;">
+        <h1>Organize and Access Your Files Anywhere.</h1>
+    </div>
+    <a id="get-started-button" href="{% url 'signup' %}" style="display: none;">
+        <div id="cta-button">
+            <p>Get started</p>
+        </div>
+    </a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginButton = document.querySelector('.navbar-right a[data-url="login"]');
+            const signupButton = document.querySelector('.navbar-right a[data-url="signup"]');
+            const slogan = document.getElementById('slogan');
+            const getStartedButton = document.getElementById('get-started-button');
+
+                if (!{{ user.is_authenticated|yesno:"true,false" }}) 
+                {
+                slogan.style.display = 'flex'; 
+                getStartedButton.style.display = 'flex'; 
+
+                if (loginButton) {
+                    loginButton.addEventListener('click', function() {
+                        slogan.style.display = 'none';
+                        getStartedButton.style.display = 'none';
+                    });
+                }
+
+                if (signupButton) {
+                    signupButton.addEventListener('click', function() {
+                        slogan.style.display = 'none';
+                        getStartedButton.style.display = 'none';
+                    });
+                }
+            }
+        });
+    </script>
 {% endblock %}
 
